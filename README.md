@@ -5,11 +5,12 @@ Allows for quick book storage, update, access and total rpice calculation.
 
 ### Build/run instructions
 
-Clone the repository.
-Open the project with your preferred IDE.
-Under "Run/Debug Configurations" add a GlassFish Server.
-Select Server Domain
-Select artifact to deploy
+* Clone the repository.
+* Open the project with your preferred IDE.
+* Under "Run/Debug Configurations" add a GlassFish Server.
+* Select Server Domain
+* Select artifact to deploy
+* Start GlassFish Server
 
 # POST
 
