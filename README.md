@@ -1,7 +1,7 @@
 # Java application for Dematic
 
-Created using Hibernate, H2 embedded database
-Allows for quick book storage, update, access and total rpice calculation.
+* Created using Hibernate, H2 embedded database
+* Allows for quick book storage, update, access and total price calculation.
 
 ### Build/run instructions
 
