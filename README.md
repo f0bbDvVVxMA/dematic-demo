@@ -74,3 +74,25 @@ Created using Hibernate, H2 embedded database
 ```/antique/{barcode}```
 
 ```/science/{barcode}```
+
+## Request body example
+```
+{
+    "barcode": "5",
+    "name": "Antique",
+    "author": "Author",
+    "quantity": 15,
+    "pricePerUnit":69.13
+}
+```
+
+## Response body example
+```
+{
+    "barcode": "5",
+    "name": "Antique",
+    "author": "Author",
+    "quantity": 15,
+    "pricePerUnit":69.13
+}
+```
