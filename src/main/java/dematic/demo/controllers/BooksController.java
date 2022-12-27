@@ -19,7 +19,7 @@ public class BooksController implements Controller<Book> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addBook(Book bookRequest) {
-        Book book = repository.findByBarcode(bookRequest.getBarcode(), bookRequest);
+        Book book = repository.findByBarcode(bookRequest.getBarcode(), Book.class);
         if (book != null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Book with specified barcode already exists\"}").build();
         }
@@ -36,7 +36,7 @@ public class BooksController implements Controller<Book> {
         if (barcode == null || barcode.isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Barcode is null or empty\"}").build();
         }
-        Book book = repository.findByBarcode(barcode, new Book());
+        Book book = repository.findByBarcode(barcode, Book.class);
 
         if (book == null)
             return Response.status(Response.Status.NOT_FOUND).entity("{\"error\":\"Book with specified barcode doesn't exist\"}").build();
@@ -53,14 +53,14 @@ public class BooksController implements Controller<Book> {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Barcode is null or empty\"}").build();
         }
 
-        Book book = repository.findByBarcode(barcode, bookRequest);
+        Book book = repository.findByBarcode(barcode, Book.class);
 
         if (book == null)
             return Response.status(Response.Status.NOT_FOUND).entity("{\"error\":\"Book with specified barcode doesn't exist\"}").build();
 
         repository.update(bookRequest);
 
-        book = repository.findByBarcode(barcode, bookRequest);
+        book = repository.findByBarcode(barcode, Book.class);
 
         return Response.ok(book).build();
     }
@@ -72,7 +72,7 @@ public class BooksController implements Controller<Book> {
         if (barcode == null || barcode.isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Barcode is null or empty\"}").build();
         }
-        Book book = repository.findByBarcode(barcode, new Book());
+        Book book = repository.findByBarcode(barcode, Book.class);
 
         if (book == null)
             return Response.status(Response.Status.NOT_FOUND).entity("{\"error\":\"Book with specified barcode doesn't exist\"}").build();
@@ -84,7 +84,7 @@ public class BooksController implements Controller<Book> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBarcodes() {
-        List<BarcodeDTO> books = repository.getAllBarcodes("book", new Book());
+        List<BarcodeDTO> books = repository.getAllBarcodes("book");
         if (books == null)
             return Response.status(Response.Status.NO_CONTENT).entity("{\"error\":\"No books exist\"}").build();
 

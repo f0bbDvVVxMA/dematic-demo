@@ -12,7 +12,6 @@ public class AntiqueBookRepository extends AbstractBookRepository<AntiqueBook> {
 
     @Override
     public double totalPrice(String barcode, AbstractBook book) {
-        AntiqueBook antiqueBook = findByBarcode(barcode, book);
-        return antiqueBook.getPricePerUnit() * antiqueBook.getQuantity() * (OffsetDateTime.now().getYear() - antiqueBook.getReleaseYear() / 10.0);
+        return book.getPricePerUnit() * book.getQuantity() * (OffsetDateTime.now().getYear() - ((AntiqueBook)book).getReleaseYear() / 10.0);
     }
 }

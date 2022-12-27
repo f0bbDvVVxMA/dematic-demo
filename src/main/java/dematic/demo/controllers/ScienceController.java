@@ -19,7 +19,7 @@ public class ScienceController implements Controller<ScienceJournal> {
     @Override
     public Response addBook(ScienceJournal scienceJournalRequest) {
         ScienceJournal book = null;
-        book = repository.findByBarcode(scienceJournalRequest.getBarcode(), new ScienceJournal());
+        book = repository.findByBarcode(scienceJournalRequest.getBarcode(), ScienceJournal.class);
         if (book != null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Book with specified barcode already exists\"}").build();
         }
@@ -38,7 +38,7 @@ public class ScienceController implements Controller<ScienceJournal> {
         if (barcode == null || barcode.isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Barcode is null or empty\"}").build();
         }
-        ScienceJournal book = repository.findByBarcode(barcode,(new ScienceJournal()));
+        ScienceJournal book = repository.findByBarcode(barcode, ScienceJournal.class);
 
         if (book == null)
             return Response.status(Response.Status.NOT_FOUND).entity("{\"error\":\"Book with specified barcode doesn't exist\"}").build();
@@ -56,14 +56,14 @@ public class ScienceController implements Controller<ScienceJournal> {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Barcode is null or empty\"}").build();
         }
 
-        ScienceJournal book = repository.findByBarcode(barcode, scienceJournalRequest);
+        ScienceJournal book = repository.findByBarcode(barcode, ScienceJournal.class);
 
         if (book == null)
             return Response.status(Response.Status.NOT_FOUND).entity("{\"error\":\"Book with specified barcode doesn't exist\"}").build();
 
         repository.update(scienceJournalRequest);
 
-        book = repository.findByBarcode(barcode, scienceJournalRequest);
+        book = repository.findByBarcode(barcode, ScienceJournal.class);
 
         return Response.ok(book).build();
     }
@@ -76,7 +76,7 @@ public class ScienceController implements Controller<ScienceJournal> {
         if (barcode == null || barcode.isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Barcode is null or empty\"}").build();
         }
-        ScienceJournal book = repository.findByBarcode(barcode, new ScienceJournal());
+        ScienceJournal book = repository.findByBarcode(barcode, ScienceJournal.class);
 
         if (book == null)
             return Response.status(Response.Status.NOT_FOUND).entity("{\"error\":\"Book with specified barcode doesn't exist\"}").build();
@@ -88,7 +88,7 @@ public class ScienceController implements Controller<ScienceJournal> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBarcodes() {
-        List<BarcodeDTO> books = repository.getAllBarcodes("scienceJournal", new ScienceJournal());
+        List<BarcodeDTO> books = repository.getAllBarcodes("scienceJournal");
         if (books == null)
             return Response.status(Response.Status.NO_CONTENT).entity("{\"error\":\"No books exist\"}").build();
 

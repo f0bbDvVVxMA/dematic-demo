@@ -32,13 +32,13 @@ public abstract class AbstractBookRepository<T extends AbstractBook> {
         return book;
     }
 
-    public T findByBarcode(String barcode, AbstractBook book)
+    public T findByBarcode(String barcode, Class<T> book)
     {
         Transaction transaction = null;
         T result = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            result = (T) session.get(book.getClass(), barcode);
+            result = (T) session.get(book, barcode);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -69,7 +69,7 @@ public abstract class AbstractBookRepository<T extends AbstractBook> {
         return book.getPricePerUnit() * book.getQuantity();
     }
 
-    public List<BarcodeDTO> getAllBarcodes(String tableName, AbstractBook book) {
+    public List<BarcodeDTO> getAllBarcodes(String tableName) {
         Transaction transaction = null;
         List<BarcodeDTO> books = new ArrayList();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

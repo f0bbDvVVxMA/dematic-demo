@@ -18,7 +18,7 @@ public class AntiqueController implements Controller<AntiqueBook> {
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Response addBook(AntiqueBook antiqueBookRequest) {
-        AntiqueBook book = repository.findByBarcode(antiqueBookRequest.getBarcode(), antiqueBookRequest);
+        AntiqueBook book = repository.findByBarcode(antiqueBookRequest.getBarcode(), AntiqueBook.class);
         if (book != null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Book with specified barcode already exists\"}").build();
         }
@@ -36,7 +36,7 @@ public class AntiqueController implements Controller<AntiqueBook> {
         if (barcode == null || barcode.isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Barcode is null or empty\"}").build();
         }
-        AntiqueBook book = repository.findByBarcode(barcode,(new AntiqueBook()));
+        AntiqueBook book = repository.findByBarcode(barcode, AntiqueBook.class);
 
         if (book == null)
             return Response.status(Response.Status.NOT_FOUND).entity("{\"error\":\"Book with specified barcode doesn't exist\"}").build();
@@ -54,14 +54,14 @@ public class AntiqueController implements Controller<AntiqueBook> {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Barcode is null or empty\"}").build();
         }
 
-        AntiqueBook book = repository.findByBarcode(barcode, antiqueBookRequest);
+        AntiqueBook book = repository.findByBarcode(barcode, AntiqueBook.class);
 
         if (book == null)
             return Response.status(Response.Status.NOT_FOUND).entity("{\"error\":\"Book with specified barcode doesn't exist\"}").build();
 
         repository.update(antiqueBookRequest);
 
-        book = repository.findByBarcode(barcode, antiqueBookRequest);
+        book = repository.findByBarcode(barcode, AntiqueBook.class);
 
         return Response.ok(book).build();
     }
@@ -74,7 +74,7 @@ public class AntiqueController implements Controller<AntiqueBook> {
         if (barcode == null || barcode.isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Barcode is null or empty\"}").build();
         }
-        AntiqueBook book = repository.findByBarcode(barcode, new AntiqueBook());
+        AntiqueBook book = repository.findByBarcode(barcode, AntiqueBook.class);
 
         if (book == null)
             return Response.status(Response.Status.NOT_FOUND).entity("{\"error\":\"Book with specified barcode doesn't exist\"}").build();
@@ -87,7 +87,7 @@ public class AntiqueController implements Controller<AntiqueBook> {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBarcodes() {
-        List<BarcodeDTO> books = repository.getAllBarcodes("antiqueBook", new AntiqueBook());
+        List<BarcodeDTO> books = repository.getAllBarcodes("antiqueBook");
         if (books == null)
             return Response.status(Response.Status.NO_CONTENT).entity("{\"error\":\"No books exist\"}").build();
 
